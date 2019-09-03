@@ -1,4 +1,4 @@
-const botconfig = require("./settings.json")
+const botconfig = require("./botconfig.json")
 const items = require("./items.json")
 const Discord = require('discord.js');
 const colours = require("./colours")
