@@ -141,10 +141,4 @@ for (var i=0; i<prefixes.length; i++) {
 });
 
 
-
-
-
-
-bot.login(botconfig.token);
-
 bot.login(process.env.token);
