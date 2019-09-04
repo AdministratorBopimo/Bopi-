@@ -1,449 +1,150 @@
-const botconfig = require("./botconfig.json")
-const items = require("./items.json")
+
+const botconfig = require("./settings.json")
+var items = require("./items.json")
 const Discord = require('discord.js');
 const colours = require("./colours")
+var fs = require('fs');
+
 const bot = new Discord.Client();
 const prefix = botconfig.prefix;
+
+var prefixes = ['lumine', 'rs', "cruento", "arc", "ovrl", "lum antlers", "cru antlers","arc antlers","grf", "pge", "vr", "wge", "maple", "maple hood", "cory", "book", "ovrl staff", "vantas", "ws", "malum", 
+        "explorer", "cave", "godlike", "binary", "solar", "blox crate", "med crate", "rc", "wcf", "ushanka"];
+        //item ids
+var ids = [295173, 294848, 295160, 295162, 287854, 295437, 295531, 295530, 295161, 294108, 298828, 288034, 300331, 300330, 296728, 300333, 297577, 287940, 292934, 300997, 
+        288960, 290604, 290025, 295195, 301362, 293638, 290617, 296673, 289294, 287989];
+        //item values
+var valueId =  [200534, 295079]
+var db = ["lumine", "rs", "cru", "arc", "ovrl", "lumantlers", "cruantlers", "arcantlers","grf", "pge", "vr", "wge", "maple", "mh", "cory", "book", "ovrlstaff", "vbs", "spec", "malum",
+        "eh", "cave", "god", "binary", "solar", "bloxcrate", "mcrate", "rc", "wcf", "ushanka"];   
 bot.on("message", (message) => {
-        if(message.content == "status")
-                message.channel.sendMessage('Bot is working fine');
-        if(message.content == `${prefix}shorthand`) {
-                 let sEmbed = new Discord.RichEmbed()
-                .setColor(colours.gold)
-                .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-                .setTitle("Shorthand")
-                .setURL("https://pastebin.com/N4gaZNb6")
-                //bottm part
-                 .setTimestamp()
-                .setFooter("Made by Administrator")
-                 message.channel.send({embed: sEmbed}); //sending the embed
-                } 
- //rs
-    if(message.content == `${prefix}rs`) {
-            let sEmbed = new Discord.RichEmbed()
-            .setColor(colours.gold)
-            .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-            .setTitle(items.rs.title)
-            .setURL(items.rs.url)
-            .setThumbnail(items.rs.thumbnail)
-            .addField("Value", items.rs.value , true)
-            .addField("Copies", items.rs.copies, true)
-            .addField("Demand", items.rs.demand, true)
-            .addField("Status", items.rs.status, true)
-            //bottm part
-            .setTimestamp()
-            .setFooter("Made by Administrator")
-            message.channel.send({embed: sEmbed}); //sending the embed
-    } 
-//lum
-       if(message.content == `${prefix}lumine`) {
+    //do
+for (var i=0; i<prefixes.length; i++) {
+    if(message.content == `${prefix}` + prefixes[i]) {
+        delete require.cache[require.resolve('./items.json')];        
+        items = require("./items.json");
+        let id = ids[i];
+        let itemValue = valueId[i];
+        // embed
+        let value = items[db[i]].value
+        let url = items[db[i]].url
+        let thumbnail = items[db[i]].thumbnail
+        let demand = items[db[i]].demand
+        let status = items[db[i]].status
+        //fetch
+        const request = require('request');
+        request.get(`https://www.brickplanet.com/web-api/store/get-item/${id}`, (err, res, details) => {
+        let item = JSON.parse(details)
+        //value
+        request.get(`https://www.brickplanet.com/web-api/store/get-item/${itemValue}`, (err, res, itemV) => {
+        let val = JSON.parse(itemV)
+        // sending embed
         let sEmbed = new Discord.RichEmbed()
         .setColor(colours.gold)
         .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.lum.title)
-        .setURL(items.lum.url)
-        .setThumbnail(items.lum.thumbnail)
-        .addField("Value", items.lum.value , true)
-        .addField("Copies", items.lum.copies, true)
-        .addField("Demand", items.lum.demand, true)
-        .addField("Status", items.lum.status, true)
+        .setTitle(item.Name)
+        .setURL(url)
+        .setThumbnail(thumbnail)
+        .addField("Value", value , true)
+        .addField("Copies", item.NumOwners, true)
+        .addField("Demand", demand, true)
+        .addField("Status", status, true)
+        .addField("Estimated Bits", `<:bits:618482702215151677>${item.EstimatedValueBits}`, true)
+        .addField("Estimated Credits", `<:credits:618482404058988575>${item.EstimatedValueCredits}`, true)
         //bottm part
         .setTimestamp()
         .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
+        message.channel.send({embed: sEmbed}); //sending the embed 
+        });
+        });
+    }
 }
-//lum
-if(message.content == `${prefix}cruento`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.cru.title)
-        .setURL(items.cru.url)
-        .setThumbnail(items.cru.thumbnail)
-        .addField("Value", items.cru.value , true)
-        .addField("Copies", items.cru.copies, true)
-        .addField("Demand", items.cru.demand, true)
-        .addField("Status", items.cru.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
-//lum
-if(message.content == `${prefix}arc`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.arc.title)
-        .setURL(items.arc.url)
-        .setThumbnail(items.arc.thumbnail)
-        .addField("Value", items.arc.value , true)
-        .addField("Copies", items.arc.copies, true)
-        .addField("Demand", items.arc.demand, true)
-        .addField("Status", items.arc.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
 
-if(message.content == `${prefix}ovrl`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.ovrl.title)
-        .setURL(items.ovrl.url)
-        .setThumbnail(items.ovrl.thumbnail)
-        .addField("Value", items.ovrl.value , true)
-        .addField("Copies", items.ovrl.copies, true)
-        .addField("Demand", items.ovrl.demand, true)
-        .addField("Status", items.ovrl.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
 
-if(message.content == `${prefix}lum antlers`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.lumantelrs.title)
-        .setURL(items.lumantelrs.url)
-        .setThumbnail(items.lumantelrs.thumbnail)
-        .addField("Value", items.lumantelrs.value , true)
-        .addField("Copies", items.lumantelrs.copies, true)
-        .addField("Demand", items.lumantelrs.demand, true)
-        .addField("Status", items.lumantelrs.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
-if(message.content == `${prefix}arc antlers`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.arcantelrs.title)
-        .setURL(items.arcantelrs.url)
-        .setThumbnail(items.arcantelrs.thumbnail)
-        .addField("Value", items.arcantelrs.value , true)
-        .addField("Copies", items.arcantelrs.copies, true)
-        .addField("Demand", items.arcantelrs.demand, true)
-        .addField("Status", items.arcantelrs.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
-if(message.content == `${prefix}grf`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.grf.title)
-        .setURL(items.grf.url)
-        .setThumbnail(items.grf.thumbnail)
-        .addField("Value", items.grf.value , true)
-        .addField("Copies", items.grf.copies, true)
-        .addField("Demand", items.grf.demand, true)
-        .addField("Status", items.grf.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
-if(message.content == `${prefix}pge`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.pge.title)
-        .setURL(items.pge.url)
-        .setThumbnail(items.pge.thumbnail)
-        .addField("Value", items.pge.value , true)
-        .addField("Copies", items.pge.copies, true)
-        .addField("Demand", items.pge.demand, true)
-        .addField("Status", items.pge.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
-if(message.content == `${prefix}vr`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.vr.title)
-        .setURL(items.vr.url)
-        .setThumbnail(items.vr.thumbnail)
-        .addField("Value", items.vr.value , true)
-        .addField("Copies", items.vr.copies, true)
-        .addField("Demand", items.vr.demand, true)
-        .addField("Status", items.vr.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
-if(message.content == `${prefix}wge`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.wge.title)
-        .setURL(items.wge.url)
-        .setThumbnail(items.wge.thumbnail)
-        .addField("Value", items.wge.value , true)
-        .addField("Copies", items.wge.copies, true)
-        .addField("Demand", items.wge.demand, true)
-        .addField("Status", items.wge.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
-if(message.content == `${prefix}maple`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.maple.title)
-        .setURL(items.maple.url)
-        .setThumbnail(items.maple.thumbnail)
-        .addField("Value", items.maple.value , true)
-        .addField("Copies", items.maple.copies, true)
-        .addField("Demand", items.maple.demand, true)
-        .addField("Status", items.maple.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
-if(message.content == `${prefix}cory`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.cory.title)
-        .setURL(items.cory.url)
-        .setThumbnail(items.cory.thumbnail)
-        .addField("Value", items.cory.value , true)
-        .addField("Copies", items.cory.copies, true)
-        .addField("Demand", items.cory.demand, true)
-        .addField("Status", items.cory.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
-if(message.content == `${prefix}book`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.book.title)
-        .setURL(items.book.url)
-        .setThumbnail(items.book.thumbnail)
-        .addField("Value", items.book.value , true)
-        .addField("Copies", items.book.copies, true)
-        .addField("Demand", items.book.demand, true)
-        .addField("Status", items.book.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
-if(message.content == `${prefix}malum`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.malum.title)
-        .setURL(items.malum.url)
-        .setThumbnail(items.malum.thumbnail)
-        .addField("Value", items.malum.value , true)
-        .addField("Copies", items.malum.copies, true)
-        .addField("Demand", items.malum.demand, true)
-        .addField("Status", items.malum.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
-if(message.content == `${prefix}ovrl staff`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.ovrlstaff.title)
-        .setURL(items.ovrlstaff.url)
-        .setThumbnail(items.ovrlstaff.thumbnail)
-        .addField("Value", items.ovrlstaff.value , true)
-        .addField("Copies", items.ovrlstaff.copies, true)
-        .addField("Demand", items.ovrlstaff.demand, true)
-        .addField("Status", items.ovrlstaff.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
-if(message.content == `${prefix}mh`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.mh.title)
-        .setURL(items.mh.url)
-        .setThumbnail(items.mh.thumbnail)
-        .addField("Value", items.mh.value , true)
-        .addField("Copies", items.mh.copies, true)
-        .addField("Demand", items.mh.demand, true)
-        .addField("Status", items.mh.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
-if(message.content == `${prefix}vantas`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.vbs.title)
-        .setURL(items.vbs.url)
-        .setThumbnail(items.vbs.thumbnail)
-        .addField("Value", items.vbs.value , true)
-        .addField("Copies", items.vbs.copies, true)
-        .addField("Demand", items.vbs.demand, true)
-        .addField("Status", items.vbs.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
-if(message.content == `${prefix}explorer`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.eh.title)
-        .setURL(items.eh.url)
-        .setThumbnail(items.eh.thumbnail)
-        .addField("Value", items.eh.value , true)
-        .addField("Copies", items.eh.copies, true)
-        .addField("Demand", items.eh.demand, true)
-        .addField("Status", items.eh.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
+        if (message.content.startsWith(`${prefix}` + 'change-value')) {
+                if (message.author.id == '254707063114956800' || message.author.id == '142405198554333184') {
+                        var parameters = message.content.split(" ");
+                        var itemName = parameters[1];
+                        var value = parameters[2]; 
+                        
+                                var data = JSON.parse(JSON.stringify(items));
+                                data[itemName].value = value;
 
-if(message.content == `${prefix}binary`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.binary.title)
-        .setURL(items.binary.url)
-        .setThumbnail(items.binary.thumbnail)
-        .addField("Value", items.binary.value , true)
-        .addField("Copies", items.binary.copies, true)
-        .addField("Demand", items.binary.demand, true)
-        .addField("Status", items.binary.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
-if(message.content == `${prefix}specs`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.spec.title)
-        .setURL(items.spec.url)
-        .setThumbnail(items.spec.thumbnail)
-        .addField("Value", items.spec.value , true)
-        .addField("Copies", items.spec.copies, true)
-        .addField("Demand", items.spec.demand, true)
-        .addField("Status", items.spec.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
-if(message.content == `${prefix}god`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.god.title)
-        .setURL(items.god.url)
-        .setThumbnail(items.god.thumbnail)
-        .addField("Value", items.god.value , true)
-        .addField("Copies", items.god.copies, true)
-        .addField("Demand", items.god.demand, true)
-        .addField("Status", items.god.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
-if(message.content == `${prefix}solar`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.solar.title)
-        .setURL(items.solar.url)
-        .setThumbnail(items.solar.thumbnail)
-        .addField("Value", items.solar.value , true)
-        .addField("Copies", items.solar.copies, true)
-        .addField("Demand", items.solar.demand, true)
-        .addField("Status", items.solar.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
-if(message.content == `${prefix}cave`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.cave.title)
-        .setURL(items.cave.url)
-        .setThumbnail(items.cave.thumbnail)
-        .addField("Value", items.cave.value , true)
-        .addField("Copies", items.cave.copies, true)
-        .addField("Demand", items.cave.demand, true)
-        .addField("Status", items.cave.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
-if(message.content == `${prefix}med crate`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.mcrate.title)
-        .setURL(items.mcrate.url)
-        .setThumbnail(items.mcrate.thumbnail)
-        .addField("Value", items.mcrate.value , true)
-        .addField("Copies", items.mcrate.copies, true)
-        .addField("Demand", items.mcrate.demand, true)
-        .addField("Status", items.mcrate.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
+                                fs.writeFile("./items.json", JSON.stringify(data), function (err) {
+                                if (err) return console.log(err);
+                                });
 
-if(message.content == `${prefix}blox crate`) {
-        let sEmbed = new Discord.RichEmbed()
-        .setColor(colours.gold)
-        .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
-        .setTitle(items.bloxcrate.title)
-        .setURL(items.bloxcrate.url)
-        .setThumbnail(items.bloxcrate.thumbnail)
-        .addField("Value", items.bloxcrate.value , true)
-        .addField("Copies", items.bloxcrate.copies, true)
-        .addField("Demand", items.bloxcrate.demand, true)
-        .addField("Status", items.bloxcrate.status, true)
-        //bottm part
-        .setTimestamp()
-        .setFooter("Made by Administrator")
-        message.channel.send({embed: sEmbed}); //sending the embed
-} 
+                                let sEmbed = new Discord.RichEmbed()
+                                .setColor(colours.gold)
+                                .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
+                               
+                                .addField('Success',itemName.charAt(0).toUpperCase() + itemName.substr(1).toLowerCase() + " has been set to - " + value + " value")
+                                //bottm part
+                                .setTimestamp()
+                                .setFooter("Made by Administrator")
+                                message.channel.send({embed: sEmbed}); //sending the embed 
+                }
+        }
+        //demand
+        if (message.content.startsWith(`${prefix}` + 'change-demand')) {
+                if (message.author.id == '254707063114956800' || message.author.id == '142405198554333184') {
+                        var parameters = message.content.split(" ");
+                        var itemName = parameters[1];
+                        var demand = parameters[2]; 
+                        
+                                var data = JSON.parse(JSON.stringify(items));
+                                data[itemName].demand = demand;
 
-  
+                                fs.writeFile("./items.json", JSON.stringify(data), function (err) {
+                                if (err) return console.log(err);
+                                });
+
+                                let sEmbed = new Discord.RichEmbed()
+                                .setColor(colours.gold)
+                                .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
+                               
+                                .addField('Success',itemName.charAt(0).toUpperCase() + itemName.substr(1).toLowerCase() + " has been set to - " + demand + " demand")
+                                //bottm part
+                                .setTimestamp()
+                                .setFooter("Made by Administrator")
+                                message.channel.send({embed: sEmbed}); //sending the embed 
+                }
+        }
+        //status
+        if (message.content.startsWith(`${prefix}` + 'change-status')) {
+                if (message.author.id == '254707063114956800' || message.author.id == '142405198554333184') {
+                        var parameters = message.content.split(" ");
+                        var itemName = parameters[1];
+                        var status = parameters[2]; 
+                        
+                                var data = JSON.parse(JSON.stringify(items));
+                                data[itemName].status = status;
+
+                                fs.writeFile("./items.json", JSON.stringify(data), function (err) {
+                                if (err) return console.log(err);
+                                });
+
+                                let sEmbed = new Discord.RichEmbed()
+                                .setColor(colours.gold)
+                                .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
+                               
+                                .addField('Success',itemName.charAt(0).toUpperCase() + itemName.substr(1).toLowerCase() + " has been set to - " + status + " status")
+                                //bottm part
+                                .setTimestamp()
+                                .setFooter("Made by Administrator")
+                                message.channel.send({embed: sEmbed}); //sending the embed 
+                }
+        }
+
+
+
 });
+
+
+
+
+
+
+bot.login(botconfig.token);
 
 bot.login(process.env.token);
