@@ -1,5 +1,5 @@
 
-const botconfig = require("./botconfig.json")
+const botconfig = require("./settings.json")
 var items = require("./items.json")
 const Discord = require('discord.js');
 const colours = require("./colours")
@@ -62,11 +62,11 @@ for (var i=0; i<prefixes.length; i++) {
 
 
         if (message.content.startsWith(`${prefix}` + 'change-value')) {
-                if (message.author.id == '254707063114956800' || message.author.id == '142405198554333184') {
+                if (message.author.id == '254707063114956800' || message.author.id == '142405198554333184' || message.author.id == '273996182819176449' || message.author.id == '370493879457153026' || message.author.id == '128203770902478848') {
                         var parameters = message.content.split(" ");
                         var itemName = parameters[1];
                         var value = parameters[2]; 
-                        
+                                if (db.includes(itemName)) {
                                 var data = JSON.parse(JSON.stringify(items));
                                 data[itemName].value = value;
 
@@ -83,15 +83,17 @@ for (var i=0; i<prefixes.length; i++) {
                                 .setTimestamp()
                                 .setFooter("Made by Administrator")
                                 message.channel.send({embed: sEmbed}); //sending the embed 
+                        }
                 }
         }
         //demand
         if (message.content.startsWith(`${prefix}` + 'change-demand')) {
-                if (message.author.id == '254707063114956800' || message.author.id == '142405198554333184') {
+                if (message.author.id == '254707063114956800' || message.author.id == '142405198554333184' || message.author.id == '273996182819176449' || message.author.id == '370493879457153026' || message.author.id == '128203770902478848') {
                         var parameters = message.content.split(" ");
                         var itemName = parameters[1];
                         var demand = parameters[2]; 
-                        
+                        if (db.includes(itemName)) {
+
                                 var data = JSON.parse(JSON.stringify(items));
                                 data[itemName].demand = demand;
 
@@ -108,15 +110,17 @@ for (var i=0; i<prefixes.length; i++) {
                                 .setTimestamp()
                                 .setFooter("Made by Administrator")
                                 message.channel.send({embed: sEmbed}); //sending the embed 
+                        }
                 }
         }
         //status
         if (message.content.startsWith(`${prefix}` + 'change-status')) {
-                if (message.author.id == '254707063114956800' || message.author.id == '142405198554333184') {
+                if (message.author.id == '254707063114956800' || message.author.id == '142405198554333184' || message.author.id == '273996182819176449' || message.author.id == '370493879457153026') {
                         var parameters = message.content.split(" ");
                         var itemName = parameters[1];
                         var status = parameters[2]; 
-                        
+                        if (db.includes(itemName)) {
+
                                 var data = JSON.parse(JSON.stringify(items));
                                 data[itemName].status = status;
 
@@ -128,11 +132,12 @@ for (var i=0; i<prefixes.length; i++) {
                                 .setColor(colours.gold)
                                 .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
                                
-                                .addField('Success',itemName.charAt(0).toUpperCase() + itemName.substr(1).toLowerCase() + " has been set to - " + status + " status")
+                                .addField('Success',itemName.charAt(0).toUpperCase() + itemName.substr(1).toLowerCase() + " has been set to - " + status + " sta")
                                 //bottm part
                                 .setTimestamp()
                                 .setFooter("Made by Administrator")
                                 message.channel.send({embed: sEmbed}); //sending the embed 
+                        }
                 }
         }
 
@@ -141,4 +146,8 @@ for (var i=0; i<prefixes.length; i++) {
 });
 
 
-bot.login(process.env.token);
+
+
+
+
+bot.login(botconfig.token);
