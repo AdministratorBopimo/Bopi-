@@ -4,7 +4,7 @@ var items = require("./items.json")
 const Discord = require('discord.js');
 const colours = require("./colours")
 var fs = require('fs');
-
+//prefix
 const bot = new Discord.Client();
 const prefix = botconfig.prefix;
 
