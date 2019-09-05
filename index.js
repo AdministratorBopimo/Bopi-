@@ -62,7 +62,7 @@ for (var i=0; i<prefixes.length; i++) {
 
 
         if (message.content.startsWith(`${prefix}` + 'change-value')) {
-                if (message.author.id == '254707063114956800' || message.author.id == '142405198554333184' || message.author.id == '273996182819176449' || message.author.id == '370493879457153026' || message.author.id == '128203770902478848' || message.author.id == '414252900672471040') {
+                if (message.author.id == '254707063114956800' || message.author.id == '142405198554333184' || message.author.id == '273996182819176449' || message.author.id == '370493879457153026' || message.author.id == '128203770902478848' || message.author.id == '414252900672471040' || message.author.id == '317022793839411212') {
                         var parameters = message.content.split(" ");
                         var itemName = parameters[1];
                         var value = parameters[2]; 
@@ -88,7 +88,7 @@ for (var i=0; i<prefixes.length; i++) {
         }
         //demand
         if (message.content.startsWith(`${prefix}` + 'change-demand')) {
-                if (message.author.id == '254707063114956800' || message.author.id == '142405198554333184' || message.author.id == '273996182819176449' || message.author.id == '370493879457153026' || message.author.id == '128203770902478848' || message.author.id == '414252900672471040') {
+                if (message.author.id == '254707063114956800' || message.author.id == '142405198554333184' || message.author.id == '273996182819176449' || message.author.id == '370493879457153026' || message.author.id == '128203770902478848' || message.author.id == '414252900672471040' || message.author.id == '317022793839411212') {
                         var parameters = message.content.split(" ");
                         var itemName = parameters[1];
                         var demand = parameters[2]; 
@@ -115,7 +115,7 @@ for (var i=0; i<prefixes.length; i++) {
         }
         //status
         if (message.content.startsWith(`${prefix}` + 'change-status')) {
-                if (message.author.id == '254707063114956800' || message.author.id == '142405198554333184' || message.author.id == '273996182819176449' || message.author.id == '370493879457153026' || message.author.id == '414252900672471040') {
+                if (message.author.id == '254707063114956800' || message.author.id == '142405198554333184' || message.author.id == '273996182819176449' || message.author.id == '370493879457153026' || message.author.id == '414252900672471040' || message.author.id == '317022793839411212') {
                         var parameters = message.content.split(" ");
                         var itemName = parameters[1];
                         var status = parameters[2]; 
