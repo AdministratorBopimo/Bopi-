@@ -6,6 +6,7 @@ var fs = require('fs');
 
 const bot = new Discord.Client();
 const prefix = botconfig.prefix;
+const userprefix = botconfig.userprefix;
 
 var prefixes = ['lumine', 'rs', "cruento", "arc", "ovrl", "lum antlers", "cru antlers","arc antlers","grf", "pge", "vr", "wge", "maple", "maple hood", "cory", "book", "ovrl staff", "vantas", "ws", "malum", 
         "explorer", "cave", "godlike", "binary", "solar", "blox crate", "med crate", "rc", "wcf", "ushanka"];
@@ -60,6 +61,77 @@ for (var i=0; i<prefixes.length; i++) {
         });
     }
 }
+
+//user search
+
+if (message.content.startsWith(`${userprefix}` + "user")) {     
+        var parameters = message.content.split(" ");
+        var userName = parameters[1];
+        //fetch
+        const request = require('request');
+        request.get(`https://www.brickplanet.com/web-api/users/get-user/${userName}`, (err, res, userN) => {
+        let user = JSON.parse(userN)
+        if (user.IsAstro == 1) {
+            var astro = "<:astro:619918970786414602>"
+        }
+        else {
+            astro = "<:notadmin:619916084279115787>"
+        }
+        //net worth
+        if (astro == "<:astro:619918970786414602>"){
+            var netWorth = user.NetWorthCredits
+        }
+        else {
+            netWorth = "Not astro"
+        }
+        //verified
+        if (user.VerifiedUser == 1){
+            var verified = "<:verified:619911977728213052>"
+        }
+        else {
+            verified = "<:notadmin:619916084279115787>"
+        }
+        //verified
+        if (user.IsAdmin == 1){
+            var admin = "<:admin:619915758637678629>"
+        }
+        else {
+            admin = "<:notadmin:619916084279115787>"
+        }
+        if (user.msg == "Invalid User Id"){
+            let sEmbed = new Discord.RichEmbed()
+            .setColor(colours.gold)
+            .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
+            .setTitle("User not found " + "<:notadmin:619916084279115787>")     
+            .setTimestamp()
+            .setFooter("Made by Administrator")
+            message.channel.send({embed: sEmbed});
+        }
+        else{
+            let sEmbed = new Discord.RichEmbed()
+            .setColor(colours.gold)
+            .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
+            .setTitle(user.Username)
+            .addField("ID", user.ID)
+            .setURL("https://www.brickplanet.com/users/" + user.Username)
+            .setThumbnail("https://cdn.brickplanet.com/" + user.AvatarImage + ".png")
+            //options
+            .addField("Astro", astro, true)
+            .addField("Net Worth", `<:credits:618482404058988575>${netWorth}`, true)
+            .addField("Forum Level", user.ForumLevel, true)
+            .addField("Forum Posts", user.ForumPosts, true)
+            .addField("Verified", verified, true)
+            .addField("Admin", admin, true)
+            //bottm part
+            .setTimestamp()
+            .setFooter("Made by Administrator")
+            message.channel.send({embed: sEmbed});
+        }
+        });
+    }
+
+
+
 
 });
 
