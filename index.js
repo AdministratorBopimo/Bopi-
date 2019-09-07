@@ -128,7 +128,7 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
             .setThumbnail("https://cdn.brickplanet.com/" + user.AvatarImage + ".png")
             //options
             .addField("BP+ Staff", staff, true)
-            .addField("Net Worth", `<:credits:618482404058988575>${netWorth}`, true)
+            .addField("Profile Views", user.ProfileViews, true)
             .addField("Verified", verified, true)
             .addField("Admin", admin, true)
             //bottm part
