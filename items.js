@@ -59,3 +59,6 @@ bot.on("message", (message) => {
         }
     
     });
+module.exports = () => {
+
+}
