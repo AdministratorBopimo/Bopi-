@@ -3,8 +3,6 @@ const botconfig = require("./botconfig.json")
 var items = require("./items.json")
 const Discord = require('discord.js');
 const colours = require("./colours")
-const groups = require("./groups.js")
-const itemss = require("./items.js")
 var fs = require('fs');
 
 const bot = new Discord.Client();
