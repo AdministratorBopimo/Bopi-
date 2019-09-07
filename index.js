@@ -1,7 +1,10 @@
+
 const botconfig = require("./botconfig.json")
 var items = require("./items.json")
 const Discord = require('discord.js');
 const colours = require("./colours")
+const groups = require("./groups.js")
+const itemss = require("./items.js")
 var fs = require('fs');
 
 const bot = new Discord.Client();
@@ -82,14 +85,18 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
             var netWorth = user.NetWorthCredits
         }
         else {
-            netWorth = "Not astro"
+            netWorth = "Not public"
         }
         //verified
         if (user.VerifiedUser == 1){
             var verified = "<:verified:619911977728213052>"
         }
+        //staff
+        if (user.Username == "Administratoor"){
+            var staff = "<:staff:619992837005770754>"
+        }
         else {
-            verified = "<:notadmin:619916084279115787>"
+            staff = "<:notadmin:619916084279115787>"
         }
         //verified
         if (user.IsAdmin == 1){
@@ -108,6 +115,25 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
             message.channel.send({embed: sEmbed});
         }
         else{
+            if (user.ID == "184069") {
+                let sEmbed = new Discord.RichEmbed()
+            .setColor(colours.gold)
+            .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
+            .setTitle(user.Username)
+            .addField("ID", user.ID)
+            .setURL("https://www.brickplanet.com/users/" + user.Username)
+            .setThumbnail("https://cdn.brickplanet.com/" + user.AvatarImage + ".png")
+            //options
+            .addField("BP+ Staff", staff, true)
+            .addField("Net Worth", `<:credits:618482404058988575>${netWorth}`, true)
+            .addField("Verified", verified, true)
+            .addField("Admin", admin, true)
+            //bottm part
+            .setTimestamp()
+            .setFooter("Made by Administrator")
+            message.channel.send({embed: sEmbed});
+            }
+            else {
             let sEmbed = new Discord.RichEmbed()
             .setColor(colours.gold)
             .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
@@ -122,11 +148,14 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
             .addField("Forum Posts", user.ForumPosts, true)
             .addField("Verified", verified, true)
             .addField("Admin", admin, true)
+            .addField("BP+ Staff", staff, true)
             //bottm part
             .setTimestamp()
             .setFooter("Made by Administrator")
             message.channel.send({embed: sEmbed});
+            }
         }
+        
         });
     }
 
