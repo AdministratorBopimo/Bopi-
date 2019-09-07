@@ -147,7 +147,7 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
             //options
             .addField("Astro", astro, true)
             .addField("Net Worth", `<:credits:618482404058988575>${netWorth}`, true)
-            .addField("Forum Level", user.ForumLevel, true)
+            .addField("Profile Views", user.ProfileViews, true)
             .addField("Forum Posts", user.ForumPosts, true)
             .addField("Verified", verified, true)
             .addField("Admin", admin, true)
