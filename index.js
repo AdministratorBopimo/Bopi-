@@ -219,6 +219,7 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
         request.get(`https://brickplanet.com/web-api/groups/get-group/${groupName}`, (err, res, groupN) => {
         let group = JSON.parse(groupN)
         let name = group.Name
+        let owner = group.OwnerName
         //verified
         if (group.IsVerified == 1){
             var verified = "<:verified:619911977728213052>"
