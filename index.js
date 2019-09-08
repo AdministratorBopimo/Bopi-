@@ -113,7 +113,7 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
             var online = "<:online:620359974635175936>"
         }
         else {
-            admin = "<:notadmin:619916084279115787>"
+            online = "<:notadmin:619916084279115787>"
         }
         if (user.msg == "Invalid User Id"){
             let sEmbed = new Discord.RichEmbed()
@@ -160,6 +160,8 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
             .addField("Verified", verified, true)
             .addField("Admin", admin, true)
             .addField("BP+ Staff", staff, true)
+             .addField("Online", online, true)
+
             //bottm part
             .setTimestamp()
             .setFooter("Made by Administrator")
