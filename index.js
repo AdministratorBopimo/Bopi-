@@ -252,6 +252,44 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
         }
         });
     }
+        if (message.content.startsWith(`${userprefix}` + "owners")) {     
+        var parameters = message.content.split(" ");
+        var id = parameters[1];
+    
+        //main
+        const request = require('request');
+        request.get(`https://www.brickplanet.com/web-api/store/get-item/${id}`, (err, res, details) => {
+        let item = JSON.parse(details)
+        let own = item.Owners
+        
+        if (own == null) {
+            let sEmbed = new Discord.RichEmbed()
+            .setColor(colours.gold)
+            .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
+            .setTitle("Item owner list not found" + "<:notadmin:619916084279115787>")     
+            .setTimestamp()
+            .setFooter("Made by Administrator")
+            message.channel.send({embed: sEmbed});
+        } 
+        else {
+            var owners = own.split(',').join(', ');
+            let sEmbed = new Discord.RichEmbed()
+            .setColor(colours.gold)
+            .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
+            .setTitle(item.Name)
+            .addField("Owners", item.NumOwners, true)
+            .setURL("https://www.brickplanet.com/store/")
+            .setThumbnail("https://cdn.brickplanet.com/" + item.Image)
+            //options
+            .addField("Owner-List", owners)
+            
+            //bottm part
+            .setTimestamp()
+            .setFooter("Made by Administrator")
+            message.channel.send({embed: sEmbed});
+        }              
+             }
+        )}
 });
 
 bot.login(process.env.token);
