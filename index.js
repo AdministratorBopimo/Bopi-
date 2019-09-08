@@ -92,6 +92,9 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
         if (user.VerifiedUser == 1){
             var verified = "<:verified:619911977728213052>"
         }
+        else{
+             verified = "<:notadmin:619916084279115787>"        
+        }
         //staff
         if (user.Username == "Administratoor"){
             var staff = "<:staff:619992837005770754>"
