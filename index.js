@@ -3,8 +3,6 @@ const botconfig = require("./botconfig.json")
 var items = require("./items.json")
 const Discord = require('discord.js');
 const colours = require("./colours")
-const group = require("./groups.js")
-const itemss = require("./items.js")
 
 //const groups = require("./groups.js")
 //const itemss = require("./items.js")
@@ -128,7 +126,7 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
             .setThumbnail("https://cdn.brickplanet.com/" + user.AvatarImage + ".png")
             //options
             .addField("BP+ Staff", staff, true)
-            .addField("Profile Views", user.ProfileViews, true)
+            .addField("Net Worth", `<:credits:618482404058988575>${netWorth}`, true)
             .addField("Verified", verified, true)
             .addField("Admin", admin, true)
             //bottm part
@@ -147,7 +145,7 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
             //options
             .addField("Astro", astro, true)
             .addField("Net Worth", `<:credits:618482404058988575>${netWorth}`, true)
-            .addField("Profile Views", user.ProfileViews, true)
+            .addField("Forum Level", user.ForumLevel, true)
             .addField("Forum Posts", user.ForumPosts, true)
             .addField("Verified", verified, true)
             .addField("Admin", admin, true)
@@ -161,8 +159,99 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
         
         });
     }
-
+    //item
+    if (message.content.startsWith(`${userprefix}` + "item")) {     
+        var parameters = message.content.split(" ");
+        var id = parameters[1];
+    
+        //main
+        const request = require('request');
+        request.get(`https://www.brickplanet.com/web-api/store/get-item/${id}`, (err, res, details) => {
+        let id = JSON.parse(details)
+        var name = id.Name
+        //on-sale
+        if (id.IsOnSale == "1"){
+            var onsale = "Yes"
+        }
+        else {
+            onsale = "No"
+        }
+            if (id.Image == null) {
+                let sEmbed = new Discord.RichEmbed()
+                .setColor(colours.gold)
+                .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
+                .setTitle("Item not found " + "<:notadmin:619916084279115787>")     
+                .setTimestamp()
+                .setFooter("Made by Administrator")
+                message.channel.send({embed: sEmbed});
+            }
+            else {
+                let sEmbed = new Discord.RichEmbed()
+                .setColor(colours.gold)
+                .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
+                .setTitle(id.Name)
+                .addField("Owners", id.NumOwners, true)
+                .setURL("https://www.brickplanet.com/store/")
+                .setThumbnail("https://cdn.brickplanet.com/" + id.Image)
+                //options
+                .addField("On-Sale", onsale,true)
+                .addField("Price Bits", `<:credits:618482404058988575>${id.PriceCredits}`, true)
+                .addField("Price Credits",`<:bits:618482702215151677>${id.PriceBits}`, true)
+                .addField("Description", (id.Description || 'No Description'), true)
+                //bottm part
+                .setTimestamp()
+                .setFooter("Made by Administrator")
+                message.channel.send({embed: sEmbed});
+            }
+        }
+        )
+    }
+    //group
+    if (message.content.startsWith(`${userprefix}` + "group")) {     
+        var parameters = message.content.split(" ");
+        var groupName = parameters[1];
+    
+        //fetch
+        const request = require('request');
+        request.get(`https://brickplanet.com/web-api/groups/get-group/${groupName}`, (err, res, groupN) => {
+        let group = JSON.parse(groupN)
+        let name = group.Name
+        //verified
+        if (group.IsVerified == 1){
+            var verified = "<:verified:619911977728213052>"
+        }
+        else {
+            verified = "<:notadmin:619916084279115787>"
+        }
+        //main
+        if (group.status == "error"){
+            let sEmbed = new Discord.RichEmbed()
+            .setColor(colours.gold)
+            .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
+            .setTitle("Group not found " + "<:notadmin:619916084279115787>")     
+            .addField("Try another ID", "e.g - 1")
+            .setTimestamp()
+            .setFooter("Made by Administrator")
+            message.channel.send({embed: sEmbed});
+        }
+        else{
+            let sEmbed = new Discord.RichEmbed()
+            .setColor(colours.gold)
+            .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
+            .setTitle(group.Name)
+            .addField("ID", group.ID)
+            .setURL("https://www.brickplanet.com/communities/")
+            .setThumbnail("https://cdn.brickplanet.com/" + group.Image)
+            //options
+            .addField("Member Count", group.MemberCount, true)
+            .addField("Verified",verified)
+            //bottm part
+            .setTimestamp()
+            .setFooter("Made by Administrator")
+            message.channel.send({embed: sEmbed});
+        }
+        });
+    }
 });
-
 
 bot.login(process.env.token);
