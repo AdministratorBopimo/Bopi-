@@ -198,8 +198,8 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
                 .setThumbnail("https://cdn.brickplanet.com/" + id.Image)
                 //options
                 .addField("On-Sale", onsale,true)
-                .addField("Price Bits", `<:credits:618482404058988575>${id.PriceCredits}`, true)
-                .addField("Price Credits",`<:bits:618482702215151677>${id.PriceBits}`, true)
+                .addField("Price Bits", `<:credits:618482702215151677>${id.PriceCredits}`, true)
+                .addField("Price Credits",`<:bits:618482404058988575>${id.PriceBits}`, true)
                 .addField("Description", (id.Description || 'No Description'), true)
                 //bottm part
                 .setTimestamp()
