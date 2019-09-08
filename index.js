@@ -238,12 +238,12 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
             message.channel.send({embed: sEmbed});
         }
         else{
-            let sEmbed = new Discord.RichEmbed()
+             let sEmbed = new Discord.RichEmbed()
             .setColor(colours.gold)
             .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
             .setTitle(group.Name)
-            .addField("ID", group.ID)
-            .setURL("https://www.brickplanet.com/communities/")
+            .addField("Owner", owner)            
+            .setURL('https://www.brickplanet.com/communities/')
             .setThumbnail("https://cdn.brickplanet.com/" + group.Image)
             //options
             .addField("Member Count", group.MemberCount, true)
