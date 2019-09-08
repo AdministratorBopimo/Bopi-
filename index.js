@@ -109,6 +109,12 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
         else {
             admin = "<:notadmin:619916084279115787>"
         }
+        if (user.IsOnline == 1){
+            var online = "<:online:620359974635175936>"
+        }
+        else {
+            admin = "<:notadmin:619916084279115787>"
+        }
         if (user.msg == "Invalid User Id"){
             let sEmbed = new Discord.RichEmbed()
             .setColor(colours.gold)
@@ -132,6 +138,7 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
             .addField("Net Worth", `<:credits:618482404058988575>${netWorth}`, true)
             .addField("Verified", verified, true)
             .addField("Admin", admin, true)
+            .addField("Online", online, true)
             //bottm part
             .setTimestamp()
             .setFooter("Made by Administrator")
