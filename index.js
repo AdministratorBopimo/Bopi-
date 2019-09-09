@@ -96,7 +96,7 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
              verified = "<:notadmin:619916084279115787>"        
         }
         //staff
-        if ((user.Username == "184069" || user.Username == "149310" || user.Username == "204088")){
+        if ((user.ID == "184069" || user.ID == "149310" || user.ID == "204088")){
             var staff = "<:staff:619992837005770754>"
         }
         else {
@@ -125,7 +125,7 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
             message.channel.send({embed: sEmbed});
         }
         else{
-            if ((user.Username == "184069" || user.Username == "149310" || user.Username == "204088")) {
+            if ((user.ID == "184069" || user.ID == "149310" || user.ID == "204088")) {
                 let sEmbed = new Discord.RichEmbed()
             .setColor(colours.gold)
             .setAuthor("BrickPlanet+", items.author.icon, items.author.server)
