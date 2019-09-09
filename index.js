@@ -110,7 +110,7 @@ if (message.content.startsWith(`${userprefix}` + "user")) {
             admin = "<:notadmin:619916084279115787>"
         }
         if (user.IsOnline == 1){
-            var online = "<:online:620359974635175936>"
+            var online = "<:tick:620683105061044234>"
         }
         else {
             online = "<:notadmin:619916084279115787>"
