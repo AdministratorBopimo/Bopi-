@@ -13,15 +13,15 @@ const prefix = botconfig.prefix;
 const userprefix = botconfig.userprefix;
 
 var prefixes = ['lumine', 'rs', "cruento", "arc", "ovrl", "lum antlers", "cru antlers","arc antlers","grf", "pge", "vr", "wge", "maple", "maple hood", "cory", "book", "ovrl staff", "vantas", "ws", "malum", 
-        "explorer", "cave", "godlike", "binary", "solar", "blox crate", "med crate", "rc", "wcf", "ushanka"];
+        "explorer", "cave", "godlike", "binary", "solar", "blox crate", "med crate", "rc", "wcf", "ushanka", "snake"];
         //item ids
 var ids = [295173, 294848, 295160, 295162, 287854, 295437, 295531, 295530, 295161, 294108, 298828, 288034, 300331, 300330, 296728, 300333, 297577, 287940, 292934, 300997, 
-        288960, 290604, 290025, 295195, 301362, 293638, 290617, 296673, 289294, 287989];
+        288960, 290604, 290025, 295195, 301362, 293638, 290617, 296673, 289294, 287989, 302429];
         //item values
 var valueId =  [302233, 302245, 302232, 302234, 302240, 302236, 302237, 302235, 302231, 302229 , 302279, 302230, 302238, 302239, 302244, 302242, 302241, 302280, 302281, 302283,
-        302243, 302284, 302285, 302286, 302287, 302288, 302289, 302290, 302292, 302293]
+        302243, 302284, 302285, 302286, 302287, 302288, 302289, 302290, 302292, 302293, 302541]
 var db = ["lumine", "rs", "cru", "arc", "ovrl", "lumantlers", "cruantlers", "arcantlers","grf", "pge", "vr", "wge", "maple", "mh", "cory", "book", "ovrlstaff", "vbs", "spec", "malum",
-        "eh", "cave", "god", "binary", "solar", "bloxcrate", "mcrate", "rc", "wcf", "ushanka"];   
+        "eh", "cave", "god", "binary", "solar", "bloxcrate", "mcrate", "rc", "wcf", "ushanka", "snake"];   
 bot.on("message", (message) => {
     //do
 for (var i=0; i<prefixes.length; i++) {
